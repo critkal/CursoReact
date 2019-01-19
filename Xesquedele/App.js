@@ -16,12 +16,32 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+class Hello extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      name: 'Kalizi',
+    }
+  }
+
+  render() {
+    return (
+      <Text 
+        style={styles.welcome}
+      > 
+        Welcome {this.state.name}! 
+      </Text>
+    )
+  }
+}
+
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
+        <Hello/>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
       </View>
