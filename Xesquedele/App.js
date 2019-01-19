@@ -34,7 +34,7 @@ export default class App extends Component {
   
   addTodo(text) {
     this.setState({
-      todos: [{text: text}]
+      todos: this.state.todos.concat([{text: text}])
     })
   }
 
@@ -51,8 +51,8 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
