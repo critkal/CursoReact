@@ -28,6 +28,9 @@ class TodoDetails extends Component {
     return (
       <View>
         <Text>{todo.text}</Text>
+        <Text>
+          Created at: {todo.location}
+        </Text>
       </View>
     )
   }
@@ -66,11 +69,10 @@ class Home extends Component {
         }
       )
       this.setState({
-        geolocationPermissionGranted: isGranted,
+        geolocationPermissionGranted: isGranted === 'granted',
       })
     } catch (err) {
       console.error(err);
-      return;
     }
   }
   
@@ -88,13 +90,30 @@ class Home extends Component {
     }
   }
 
-  setTodoLocation(id, coords) {
+  async setTodoLocation(id, coords) {
     const {latitude, longitude} = coords;
-    const {todos} = this.state;
-    todos.find(todo => todo.id === id).location = coords;
-    this.setState({
-      todos: todos
-    });
+    
+    try {
+      const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`);
+      const data = await response.json();
+
+      if(!data.error_message) {
+        const address = data.results[0].formatted_address;
+  
+        const {todos} = this.state;
+        todos.find(todo => todo.id === id).location = address;
+  
+        this.setState({
+          todos
+        })
+      } else {
+        throw JSON.stringify(data);
+      }
+    }
+    catch(err) {
+      console.error(err)
+    }
+
   }
 
   render() {
