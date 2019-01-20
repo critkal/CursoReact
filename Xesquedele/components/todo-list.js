@@ -5,8 +5,8 @@ import Todo from './todo';
 class TodoList extends React.Component{
     render(){
         const todosToRender = 
-            this.props.todoList.map(function(todo) {
-                return <Todo text = {todo.text}/>
+            this.props.todoList.map((todo) => {
+                return <Todo text = {todo.text} navigation={this.props.navigation}/>
             });
 
         return(

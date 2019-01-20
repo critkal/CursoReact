@@ -14,10 +14,16 @@ For instance, be sure to have Android Studio installed and have an emulated devi
 3. Create app
 ```react-native init AwesomeProject```
 
-4. Run app
+4. install react navigation and gesture handler
+```npm install --save react-navigation react-native-gesture-handler```
+
+5. link gesture handler to your project
+```react-native link react-native-gesture-handler```
+
+6. Run app
 ```react-native run-android```
 
-5. Start coding (```App.js```)
+7. Start coding (```App.js```)
 
 So, Let's begin: Open the ```App.js``` file and check the code.
 
@@ -67,4 +73,34 @@ To apply the style, we go to the ```Text``` declaration and set it's style to ``
 <Text style={styles.container}>
     Hello World!
 </Text>
+```
+
+### Navigation
+To allow navigation on android, add the following code to ```MainActivity.java```
+
+Below the 
+```java
+import com.facebook.react.ReactActivity;
+```
+
+code, insert the following imports
+```java
+
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactRootView;
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+```
+
+and this method inside the class
+
+```java
+@Override
+protected ReactActivityDelegate createReactActivityDelegate() {
+  return new ReactActivityDelegate(this, getMainComponentName()) {
+    @Override
+    protected ReactRootView createRootView() {
+      return new RNGestureHandlerEnabledRootView(MainActivity.this);
+    }
+  };
+}
 ```

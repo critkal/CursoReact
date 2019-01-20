@@ -34,7 +34,7 @@ class AddTodo extends React.Component{
                 <View style={styles.button}>
                     <Button 
                     disabled={this.state.text.length <= 3}
-                    color={'#7F00FF'}
+                    color={'#7e57c2'}
                     onPress={()=> this.addTodo()}
                     title='+'
                     />
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         padding: 15,
-        backgroundColor:'lightgray',
+        backgroundColor:'#b085f5',
         flexDirection: 'row',
     },
     imput: {
