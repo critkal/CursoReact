@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, ScrollView, View} from 'react-native';
 import TodoList from './components/todo-list';
 import AddTodo from './components/add-todo';
 
@@ -15,26 +15,14 @@ export default class App extends Component {
   constructor(){
     super();
 
-    const todo1 = {
-      text: 'This hate that you gave me',
-    };
-    const todo2 = {
-      text: 'Keep saying the same thing',
-    };
-    const todo3 = {
-      text: 'To sing when you hurt and to sing when you cry',
-    };
-    const todo4 ={
-      text: 'To sing when you live and tho sing when you die',
-    }
     this.state = {
-      todos : [todo1, todo2, todo3, todo4],
+      todos : [],
     }
   }
   
   addTodo(text) {
     this.setState({
-      todos: this.state.todos.concat([{text: text}])
+      todos: [{ text: text }].concat(this.state.todos)
     })
   }
 
@@ -42,8 +30,12 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <AddTodo add={text => this.addTodo(text)}/>
-        <TodoList todoList={this.state.todos}/>
+        <ScrollView
+          contentContainerStyle={styles.dereg}>
+          <TodoList todoList={this.state.todos}/>
+        </ScrollView>
       </View>
+      
     );
   }
 }
@@ -51,14 +43,11 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 25,
-    textAlign: 'center',
-    color: '#8286F4',
-    margin: 10,
+  dereg:{
+    width: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   }
 });

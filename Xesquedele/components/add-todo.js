@@ -31,11 +31,15 @@ class AddTodo extends React.Component{
                     value={this.state.text}
                     onChangeText={text => this.onTextInput(text)}
                     />
-                <Button 
-                    style={styles.button}
+                <View style={styles.button}>
+                    <Button 
+                    disabled={this.state.text.length <= 3}
+                    color={'#7F00FF'}
                     onPress={()=> this.addTodo()}
-                    title='Add'
-                />
+                    title='+'
+                    />
+                </View>
+                
             </View>
         )
     }
@@ -49,14 +53,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     imput: {
-        flex: 1,
+        flex: 5,
         padding: 5,
         backgroundColor: 'white',
-        borderRadius: 5,
+        borderRadius: 2,
         marginRight: 10,
+        elevation: 3,
     },
     button: {
+        flex: 1,
         flexShrink: 0,
+        elevation: 3,
     }
 });
 

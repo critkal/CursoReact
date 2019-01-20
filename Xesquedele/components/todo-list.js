@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Todo from './todo';
 
 class TodoList extends React.Component{
@@ -10,10 +10,17 @@ class TodoList extends React.Component{
             });
 
         return(
-            <View style={this.props.style}>
+            <View style={styles.container}>
                 {todosToRender}
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        padding: 15,
+    }
+})
 export default TodoList;
