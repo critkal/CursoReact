@@ -5,10 +5,10 @@ class Todo extends React.Component{
   render () {
     return (
       <TouchableNativeFeedback
-        onPress= {() => {this.props.navigation.navigate('TodoDetails', {text: this.props.text})}}>
+        onPress= {() => {this.props.navigation.navigate('TodoDetails', {todo: this.props.todo})}}>
         <View style={styles.container}>
           <Text style={styles.text}>
-            {this.props.text}
+            {this.props.todo.text}
           </Text>
         </View>
       </TouchableNativeFeedback>

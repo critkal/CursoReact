@@ -6,7 +6,7 @@ class TodoList extends React.Component{
     render(){
         const todosToRender = 
             this.props.todoList.map((todo) => {
-                return <Todo text = {todo.text} navigation={this.props.navigation}/>
+                return <Todo todo={todo} navigation={this.props.navigation}/>
             });
 
         return(

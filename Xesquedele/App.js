@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, ScrollView, View, Text} from 'react-native';
+import {StyleSheet, ScrollView, View, Text, PermissionsAndroid} from 'react-native';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import TodoList from './components/todo-list';
 import AddTodo from './components/add-todo';
@@ -23,9 +23,11 @@ class TodoDetails extends Component {
     title: 'Xesquing Details'
   }
   render () {
+    const todo = this.props.navigation.getParam('todo');
+    console.warn(todo)
     return (
       <View>
-        <Text>{this.props.navigation.getParam('text')}</Text>
+        <Text>{todo.text}</Text>
       </View>
     )
   }
@@ -47,14 +49,52 @@ class Home extends Component {
     // }, 3000);
 
     this.state = {
+      idCount: 0,
       todos : [],
+    }
+
+    this.requestMapsPermission();
+  }
+
+  async requestMapsPermission(){
+    try{
+      const isGranted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, 
+        {
+          'title': 'FBI here',
+          'message': 'We need to know your location ;)'
+        }
+      )
+      this.setState({
+        geolocationPermissionGranted: isGranted,
+      })
+    } catch (err) {
+      console.error(err);
+      return;
     }
   }
   
   addTodo(text) {
+    const id = this.state.idCount +1;
     this.setState({
-      todos: [{ text: text }].concat(this.state.todos)
-    })
+      todos: [{ id, text}].concat(this.state.todos),
+      idCount: id
+    });
+
+    if(this.state.geolocationPermissionGranted) {
+      navigator.geolocation.getCurrentPosition((pos)=> {
+        this.setTodoLocation(id, pos.coords)
+      }, null, {enableHighAccuracy: true})
+    }
+  }
+
+  setTodoLocation(id, coords) {
+    const {latitude, longitude} = coords;
+    const {todos} = this.state;
+    todos.find(todo => todo.id === id).location = coords;
+    this.setState({
+      todos: todos
+    });
   }
 
   render() {
